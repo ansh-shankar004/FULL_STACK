@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuber Classic - A Luxurious Dining Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles for a more luxurious feel */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfcf8;
+            color: #333;
+        }
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Color Palette: Gold is primary, Maroon is accent */
+        .bg-primary-gold { background-color: #aa8a59; }
+        .text-primary-gold { color: #aa8a59; }
+        .border-primary-gold { border-color: #aa8a59; }
+        .bg-accent-maroon { background-color: #6D1A36; }
+        .text-accent-maroon { color: #6D1A36; }
+        
+        .btn-primary {
+            background-color: #aa8a59;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .btn-primary:hover {
+            background-color: #91744a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        .btn-secondary {
+            background-color: #6D1A36;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .btn-secondary:hover {
+            background-color: #521429;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        /* Header Styling */
+        #main-header {
+            transition: background-color 0.4s ease, box-shadow 0.4s ease;
+        }
+        #main-header.scrolled {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Hero Section Styling */
+        #hero {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        .hero-slide.active {
+            opacity: 1;
+        }
+        .scroll-down-arrow {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+            40% { transform: translate(-50%, -20px); }
+            60% { transform: translate(-50%, -10px); }
+        }
+
+        /* Fade-in on scroll animation */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .focus\:ring-gold:focus {
+            --tw-ring-color: #aa8a59;
+        }
+        .focus\:border-gold:focus {
+            --tw-border-opacity: 1;
+            border-color: #aa8a59;
+        }
+
+        /* Testimonial Carousel Styles */
+        .testimonial-carousel-container {
+            position: relative;
+            max-width: 800px; /* Adjust as needed */
+            margin: auto;
+        }
+        .testimonial-carousel-wrapper {
+            overflow: hidden;
+        }
+        .testimonial-carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .testimonial-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        .carousel-button:hover {
+            background-color: white;
+        }
+        .carousel-button.prev {
+            left: -20px;
+        }
+        .carousel-button.next {
+            right: -20px;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header -->
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-serif font-bold text-primary-gold">
+                Kuber Classic
+            </div>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#hero" class="text-gray-600 hover:text-primary-gold font-medium">Home</a>
+                <a href="#story" class="text-gray-600 hover:text-primary-gold font-medium">Our Story</a>
+                <a href="#quote" class="text-gray-600 hover:text-primary-gold font-medium">Event Quote</a>
+                <a href="#offers" class="text-gray-600 hover:text-primary-gold font-medium">Offers</a>
+                <a href="#gallery" class="text-gray-600 hover:text-primary-gold font-medium">Gallery</a>
+                <a href="#contact" class="text-gray-600 hover:text-primary-gold font-medium">Contact</a>
+            </nav>
+            <a href="#reservation" class="hidden md:block btn-primary">Book a Table</a>
+            <button id="mobile-menu-button" class="md:hidden text-primary-gold">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
+            <a href="#hero" class="block py-2 text-gray-600 hover:text-primary-gold">Home</a>
+            <a href="#story" class="block py-2 text-gray-600 hover:text-primary-gold">Our Story</a>
+            <a href="#quote" class="block py-2 text-gray-600 hover:text-primary-gold">Event Quote</a>
+            <a href="#offers" class="block py-2 text-gray-600 hover:text-primary-gold">Offers</a>
+            <a href="#gallery" class="block py-2 text-gray-600 hover:text-primary-gold">Gallery</a>
+            <a href="#contact" class="block py-2 text-gray-600 hover:text-primary-gold">Contact</a>
+            <a href="#reservation" class="block mt-2 btn-primary text-center">Book a Table</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section with Image Slider -->
+        <section id="hero">
+            <div id="hero-slider">
+                <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1974&auto=format&fit=crop');"></div>
+                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2070&auto=format&fit=crop');"></div>
+                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=2070&auto=format&fit=crop');"></div>
+            </div>
+            <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+            <div class="relative z-10 flex flex-col items-center justify-center h-full text-white text-center px-4">
+                <h1 class="text-5xl md:text-7xl font-bold font-serif leading-tight mb-4">A Legacy of Flavor</h1>
+                <p class="mt-4 text-lg md:text-xl max-w-3xl">Discover a dining experience where culinary art meets timeless tradition. Welcome to Kuber Classic.</p>
+                <a href="#reservation" class="mt-8 btn-secondary">Reserve Your Table</a>
+            </div>
+            <a href="#story" class="scroll-down-arrow">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </a>
+        </section>
+
+        <!-- Our Story Section -->
+        <section id="story" class="py-20 md:py-32 bg-white">
+            <div class="container mx-auto px-6 fade-in-section">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1579027989536-b7b1f875659b?q=80&w=1966&auto=format&fit=crop" class="rounded-lg shadow-2xl" alt="Kuber Classic Interior">
+                    </div>
+                    <div>
+                        <h2 class="text-4xl md:text-5xl font-serif text-primary-gold mb-6">Our Story</h2>
+                        <p class="text-lg text-gray-600 mb-4">Founded on a passion for authentic Indian cuisine, Kuber Classic is a family-owned restaurant dedicated to preserving the rich heritage of our culinary traditions. For over two decades, we have been serving our community in Firozpur with recipes passed down through generations.</p>
+                        <p class="text-lg text-gray-600">Our philosophy is simple: use the freshest local ingredients, honor traditional cooking methods, and serve every dish with warmth and hospitality. We invite you to join our family and create lasting memories around the table.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Table Reservation Section -->
+        <section id="reservation" class="py-20 md:py-24 bg-[#fdfcf8]">
+            <div class="container mx-auto px-6 fade-in-section">
+                <h2 class="text-4xl md:text-5xl font-serif text-center text-primary-gold mb-4">Table Reservation</h2>
+                <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">Book your table online for a seamless dining experience. For parties larger than 8, please call us directly.</p>
+                <div class="bg-white p-8 rounded-lg shadow-xl max-w-4xl mx-auto">
+                    <form id="reservation-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                            <input type="text" id="name" name="name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-gold focus:border-gold" required placeholder="Your Full Name">
+                        </div>
+                         <div>
+                            <label for="mobile" class="block text-sm font-medium text-gray-700">Mobile Number</label>
+                            <input type="tel" id="mobile" name="mobile" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-gold focus:border-gold" required placeholder="10-digit mobile number" pattern="[0-9]{10}">
+                        </div>
+                        <div>
+                            <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
+                            <input type="date" id="date" name="date" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-gold focus:border-gold" required>
+                        </div>
+                        <div>
+                            <label for="time" class="block text-sm font-medium text-gray-700">Time</label>
+                            <select id="time" name="time" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-gold focus:border-gold" required>
+                                <!-- Time slots will be generated by JavaScript -->
+                            </select>
+                        </div>
+                        <div>
+                            <label for="guests" class="block text-sm font-medium text-gray-700">Guests</label>
+                            <select id="guests" name="guests" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-gold focus:border-gold" required>
+                                <option>1 Person</option><option>2 People</option><option>3 People</option><option>4 People</option><option>5 People</option><option>6 People</option><option>7 People</option><option>8 People</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="duration" class="block text-sm font-medium text-gray-700">Duration</label>
+                             <select id="duration" name="duration" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-gold focus:border-gold" required>
+                                <option>1 Hour</option>
+                                <option>2 Hours</option>
+                                <option>3 Hours</option>
+                                <option>4 Hours</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2 text-center mt-4">
+                            <button type="submit" class="w-full btn-primary h-[50px]">Find a Table</button>
+                        </div>
+                    </form>
+                    <div id="form-message" class="mt-4 text-center font-medium"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Quote Estimator Section -->
+        <section id="quote" class="py-20 md:py-24 bg-white">
+            <div class="container mx-auto px-6 fade-in-section">
+                <h2 class="text-4xl md:text-5xl font-serif text-center text-primary-gold mb-4">Event Quote Estimator</h2>
+                <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">Plan your event and get an instant quote based on your preferences.</p>
+                
+                <div class="bg-gray-50 p-8 rounded-lg shadow-xl max-w-4xl mx-auto">
+                    <!-- Quote Form -->
+                    <form id="quote-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Number of Guests -->
+                        <div>
+                            <label for="guests-quote" class="block text-sm font-medium text-gray-700">Number of Guests</label>
+                            <input type="number" id="guests-quote" name="guests-quote" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-gold focus:border-gold" min="1" required placeholder="e.g., 50">
+                        </div>
+
+                        <!-- Event Duration -->
+                        <div>
+                            <label for="duration-quote" class="block text-sm font-medium text-gray-700">Event Duration (Hours)</label>
+                            <input type="number" id="duration-quote" name="duration-quote" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-gold focus:border-gold" min="1" required placeholder="e.g., 3">
+                        </div>
+
+                        <!-- Event Type -->
+                        <div>
+                            <label for="event-type" class="block text-sm font-medium text-gray-700">Event Type</label>
+                            <select id="event-type" name="event-type" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-gold focus:border-gold" required>
+                                <option value="Birthday">Birthday</option>
+                                <option value="Wedding">Wedding</option>
+                                <option value="Corporate Dinner">Corporate Dinner</option>
+                                <option value="Anniversary">Anniversary</option>
+                            </select>
+                        </div>
+
+                        <!-- Meal Type -->
+                        <div>
+                            <label for="meal-type" class="block text-sm font-medium text-gray-700">Meal Type</label>
+                            <select id="meal-type" name="meal-type" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-gold focus:border-gold" required>
+                                <option value="Veg">Veg</option>
+                                <option value="Non-Veg">Non-Veg</option>
+                                <option value="Mixed">Mixed</option>
+                            </select>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="md:col-span-2 text-center mt-4">
+                            <button type="submit" class="w-full md:w-auto btn-primary">Estimate Cost</button>
+                        </div>
+                    </form>
+
+                    <!-- Quote Result Display -->
+                    <div id="quote-result" class="mt-8 text-center" style="opacity: 0; transition: opacity 0.8s ease-in-out;">
+                        <!-- Content will be injected by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Special Offers Section -->
+        <section id="offers" class="py-20 md:py-24 bg-[#fdfcf8]">
+            <div class="container mx-auto px-6 fade-in-section">
+                <h2 class="text-4xl md:text-5xl font-serif text-center text-primary-gold mb-12">Our Special Offers</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Offer Cards -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=2080&auto=format&fit=crop" alt="Special Offer" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-serif font-bold text-accent-maroon">Corporate Lunch Combo</h3>
+                            <p class="mt-2 text-gray-600">Enjoy a special fixed-price menu for your weekday lunch. Perfect for business meetings. 20% Off.</p>
+                            <a href="#" class="inline-block mt-4 text-primary-gold font-semibold hover:underline">Learn More &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=1974&auto=format&fit=crop" alt="Special Offer" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-serif font-bold text-accent-maroon">Weekend Family Feast</h3>
+                            <p class="mt-2 text-gray-600">A curated menu for the entire family to enjoy together. Includes starters, main course, and desserts.</p>
+                            <a href="#" class="inline-block mt-4 text-primary-gold font-semibold hover:underline">View Menu &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://images.unsplash.com/photo-1529042410759-befb1204b468?q=80&w=1972&auto=format&fit=crop" alt="Special Offer" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-serif font-bold text-accent-maroon">Happy Hours</h3>
+                            <p class="mt-2 text-gray-600">Get one-plus-one on select beverages from 4 PM to 7 PM, Monday to Friday.</p>
+                            <a href="#" class="inline-block mt-4 text-primary-gold font-semibold hover:underline">See Details &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="py-20 md:py-32 bg-[#fdfcf8]">
+            <div class="container mx-auto px-6 fade-in-section">
+                <h2 class="text-4xl md:text-5xl font-serif text-center text-primary-gold mb-16">What Our Guests Say</h2>
+                <div class="testimonial-carousel-container">
+                    <div class="testimonial-carousel-wrapper">
+                        <div class="testimonial-carousel-track">
+                            <!-- Slide 1 -->
+                            <div class="testimonial-slide p-4">
+                                <div class="bg-white p-8 rounded-lg shadow-xl text-center">
+                                    <svg class="w-12 h-12 text-primary-gold mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6v3.586l-1.707 1.707A1 1 0 003.586 15h12.828a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM5 8a5 5 0 0110 0v3.586l.293.293a1 1 0 00.707-1.707L15 9.586V8a5 5 0 00-10 0zM3 16a1 1 0 01-1-1v-1h18v1a1 1 0 01-1 1H3z"></path></svg>
+                                    <p class="text-gray-600 italic">"An unforgettable experience! The food was divine, and the ambiance was perfect. Kuber Classic is a true gem in Firozpur."</p>
+                                    <p class="font-semibold text-accent-maroon mt-4">- Rohan Sharma</p>
+                                </div>
+                            </div>
+                            <!-- Slide 2 -->
+                            <div class="testimonial-slide p-4">
+                                <div class="bg-white p-8 rounded-lg shadow-xl text-center">
+                                    <svg class="w-12 h-12 text-primary-gold mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6v3.586l-1.707 1.707A1 1 0 003.586 15h12.828a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM5 8a5 5 0 0110 0v3.586l.293.293a1 1 0 00.707-1.707L15 9.586V8a5 5 0 00-10 0zM3 16a1 1 0 01-1-1v-1h18v1a1 1 0 01-1 1H3z"></path></svg>
+                                    <p class="text-gray-600 italic">"The best family restaurant in the city. The staff made us feel so welcome, and every dish was a masterpiece. We'll be back soon!"</p>
+                                    <p class="font-semibold text-accent-maroon mt-4">- The Gupta Family</p>
+                                </div>
+                            </div>
+                            <!-- Slide 3 -->
+                            <div class="testimonial-slide p-4">
+                                <div class="bg-white p-8 rounded-lg shadow-xl text-center">
+                                    <svg class="w-12 h-12 text-primary-gold mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6v3.586l-1.707 1.707A1 1 0 003.586 15h12.828a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM5 8a5 5 0 0110 0v3.586l.293.293a1 1 0 00.707-1.707L15 9.586V8a5 5 0 00-10 0zM3 16a1 1 0 01-1-1v-1h18v1a1 1 0 01-1 1H3z"></path></svg>
+                                    <p class="text-gray-600 italic">"From the starters to the dessert, everything was exceptional. A perfect place for a special occasion. Highly recommended."</p>
+                                    <p class="font-semibold text-accent-maroon mt-4">- Priya Kaur</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-button prev" id="prev-testimonial">
+                        <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+                    <button class="carousel-button next" id="next-testimonial">
+                        <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="py-20 md:py-24 bg-white">
+            <div class="container mx-auto px-6 fade-in-section">
+                <h2 class="text-4xl md:text-5xl font-serif text-center text-primary-gold mb-12">Our Gallery</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
+                    <div class="overflow-hidden rounded-lg md:col-span-2">
+                        <img class="h-full w-full object-cover transform hover:scale-110 transition-transform duration-300" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2070&auto=format&fit=crop" alt="Restaurant Ambiance">
+                    </div>
+                    <div class="overflow-hidden rounded-lg">
+                        <img class="h-full w-full object-cover transform hover:scale-110 transition-transform duration-300" src="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?q=80&w=1974&auto=format&fit=crop" alt="Food Plating">
+                    </div>
+                    <div class="overflow-hidden rounded-lg">
+                        <img class="h-full w-full object-cover transform hover:scale-110 transition-transform duration-300" src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1974&auto=format&fit=crop" alt="Restaurant Interior">
+                    </div>
+                    <div class="overflow-hidden rounded-lg">
+                        <img class="h-full w-full object-cover transform hover:scale-110 transition-transform duration-300" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=2070&auto=format&fit=crop" alt="Fine Dining Setup">
+                    </div>
+                    <div class="overflow-hidden rounded-lg">
+                        <img class="h-full w-full object-cover transform hover:scale-110 transition-transform duration-300" src="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=2070&auto=format&fit=crop" alt="Bar Area">
+                    </div>
+                    <div class="overflow-hidden rounded-lg md:col-span-2">
+                        <img class="h-full w-full object-cover transform hover:scale-110 transition-transform duration-300" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop" alt="Delicious Food">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-primary-gold text-white">
+        <div class="container mx-auto px-6 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left">
+                <div class="md:col-span-2">
+                    <h3 class="text-2xl font-serif font-bold mb-4">Kuber Classic</h3>
+                    <p class="text-gray-200 max-w-md">Experience the pinnacle of authentic Indian dining in the heart of Firozpur. We look forward to welcoming you.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-serif font-bold mb-4">Contact Us</h3>
+                    <p class="text-gray-200">
+                        <a href="tel:+911234567890" class="hover:text-white">Phone: +91 12345 67890</a><br>
+                        <a href="mailto:reservations@kuberclassic.com" class="hover:text-white">Email: reservations@kuberclassic.com</a><br>
+                        123 Temple Road, Firozpur, Punjab
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-serif font-bold mb-4">Follow Us</h3>
+                    <div class="flex justify-center md:justify-start space-x-4">
+                        <a href="#" class="text-gray-200 hover:text-white"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.582 0 0 .582 0 1.325v21.351C0 23.418.582 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.742 0 1.325-.582 1.325-1.325V1.325C24 .582 23.418 0 22.675 0z"/></svg></a>
+                        <a href="#" class="text-gray-200 hover:text-white"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163zm0 1.626c-3.141 0-3.495.012-4.71.068-2.859.13-3.841 1.12-3.973 3.973-.056 1.215-.067 1.57-.067 4.71s.011 3.495.067 4.71c.132 2.859 1.114 3.841 3.973 3.973.056 1.215.067 1.57.067 4.71s-.011 3.495-.067 4.71c-.132 2.859-1.114 3.841-3.973 3.973C8.505 20.225 8.15 20.237 4.009 20.237c-3.141 0-3.495-.012-4.71-.068-2.859-.13-3.841-1.12-3.973-3.973-.056-1.215-.067-1.57-.067-4.71s.011-3.495.067-4.71c.132-2.859 1.114-3.841 3.973-3.973C8.505 3.786 8.15 3.775 4.009 3.775c3.141 0 3.495.012 4.71.068 2.859.13 3.841 1.12 3.973 3.973.056 1.215.067 1.57.067 4.71s-.011 3.495-.067 4.71z"/></svg></a>
+                        <a href="#" class="text-gray-200 hover:text-white"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.223.084c.645 1.951 2.518 3.375 4.733 3.415a9.864 9.864 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-yellow-100 border-opacity-25 mt-12 pt-8 text-center text-gray-300 text-sm">
+                <p>&copy; 2024 Kuber Classic. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Header scroll effect
+            const header = document.getElementById('main-header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Hero slider
+            const slides = document.querySelectorAll('.hero-slide');
+            let currentSlide = 0;
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 5000); // Change image every 5 seconds
+
+            // Fade-in on scroll
+            const sections = document.querySelectorAll('.fade-in-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            sections.forEach(section => observer.observe(section));
+
+            // Populate time slots for reservation
+            const timeSelect = document.getElementById('time');
+            const startTime = 11 * 60; // 11:00 AM in minutes
+            const endTime = 22 * 60 + 45; // 10:45 PM in minutes
+            for (let i = startTime; i <= endTime; i += 15) {
+                const hours = Math.floor(i / 60);
+                const minutes = i % 60;
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                const displayHours = hours % 12 === 0 ? 12 : hours % 12;
+                const displayMinutes = minutes < 10 ? '0' + minutes : minutes;
+                const timeString = `${displayHours}:${displayMinutes} ${ampm}`;
+                
+                const option = document.createElement('option');
+                option.value = timeString;
+                option.textContent = timeString;
+                timeSelect.appendChild(option);
+            }
+
+            // Reservation form handling
+            const reservationForm = document.getElementById('reservation-form');
+            const formMessage = document.getElementById('form-message');
+            const dateInput = document.getElementById('date');
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.setAttribute('min', today);
+
+            reservationForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                formMessage.textContent = 'Checking availability...';
+                formMessage.className = 'mt-4 text-center font-medium text-primary-gold';
+
+                // Collect form data
+                const name = document.getElementById('name').value;
+                const mobile = document.getElementById('mobile').value;
+                const date = document.getElementById('date').value;
+                const time = document.getElementById('time').value;
+                const guests = document.getElementById('guests').value;
+                const duration = document.getElementById('duration').value;
+
+                const reservationData = { name, mobile, date, time, guests, duration };
+                const jsonData = JSON.stringify(reservationData, null, 2);
+                
+                // Log JSON data to the console
+                console.log("New Reservation Request (JSON):");
+                console.log(jsonData);
+
+                setTimeout(() => {
+                    const isSuccess = Math.random() > 0.2;
+                    if (isSuccess) {
+                        formMessage.textContent = 'Table available! Your reservation request has been received. We will call you shortly to confirm.';
+                        formMessage.className = 'mt-4 text-center font-medium text-green-600';
+                        reservationForm.reset();
+                        dateInput.setAttribute('min', today);
+                    } else {
+                        formMessage.textContent = 'Sorry, no tables are available at that time. Please try another slot.';
+                        formMessage.className = 'mt-4 text-center font-medium text-red-600';
+                    }
+                }, 1500);
+            });
+
+            // Event Quote Estimator Logic
+            const quoteForm = document.getElementById('quote-form');
+            const quoteResultDiv = document.getElementById('quote-result');
+
+            if (quoteForm) {
+                quoteForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+
+                    const guests = parseInt(document.getElementById('guests-quote').value, 10);
+                    const hours = parseInt(document.getElementById('duration-quote').value, 10);
+                    const eventType = document.getElementById('event-type').value;
+                    const mealType = document.getElementById('meal-type').value;
+
+                    if (isNaN(guests) || isNaN(hours) || guests <= 0 || hours <= 0) {
+                        quoteResultDiv.innerHTML = `<p class="text-red-600 font-medium">Please enter a valid number of guests and duration.</p>`;
+                        quoteResultDiv.style.opacity = '1';
+                        return;
+                    }
+
+                    let rate = 0;
+                    switch (mealType) {
+                        case 'Veg': rate = 500; break;
+                        case 'Non-Veg': rate = 700; break;
+                        case 'Mixed': rate = 600; break;
+                    }
+
+                    let totalCost = guests * hours * rate;
+                    let discountApplied = false;
+                    if (eventType === 'Corporate Dinner' && totalCost > 25000) {
+                        totalCost *= 0.90; // 10% discount
+                        discountApplied = true;
+                    }
+                    
+                    const formattedCost = totalCost.toLocaleString('en-IN', {
+                        style: 'currency', currency: 'INR', minimumFractionDigits: 0, maximumFractionDigits: 0,
+                    });
+
+                    let resultHTML = `
+                        <p class="text-lg text-gray-600">Thank you for planning with Kuber Classic!</p>
+                        <p class="text-gray-800 mt-2">Your estimated event cost is:</p>
+                        <p class="text-4xl font-serif font-bold text-primary-gold mt-2">${formattedCost}</p>
+                    `;
+
+                    if (discountApplied) {
+                        resultHTML += `<p class="text-sm text-green-600 mt-2">(A 10% corporate discount has been applied!)</p>`;
+                    }
+
+                    quoteResultDiv.innerHTML = resultHTML;
+                    quoteResultDiv.style.opacity = '1';
+                });
+            }
+
+            // Testimonial Carousel Logic
+            const track = document.querySelector('.testimonial-carousel-track');
+            if (track) {
+                const slides = Array.from(track.children);
+                const nextButton = document.getElementById('next-testimonial');
+                const prevButton = document.getElementById('prev-testimonial');
+                let currentIndex = 0;
+                let intervalId;
+
+                const moveToSlide = (targetIndex) => {
+                    track.style.transform = 'translateX(-' + targetIndex * 100 + '%)';
+                    currentIndex = targetIndex;
+                };
+
+                const startAutoPlay = () => {
+                    intervalId = setInterval(() => {
+                        const nextIndex = (currentIndex + 1) % slides.length;
+                        moveToSlide(nextIndex);
+                    }, 5000); // Change slide every 5 seconds
+                };
+
+                const stopAutoPlay = () => {
+                    clearInterval(intervalId);
+                };
+
+                nextButton.addEventListener('click', () => {
+                    stopAutoPlay();
+                    const nextIndex = (currentIndex + 1) % slides.length;
+                    moveToSlide(nextIndex);
+                    startAutoPlay();
+                });
+
+                prevButton.addEventListener('click', () => {
+                    stopAutoPlay();
+                    const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+                    moveToSlide(prevIndex);
+                    startAutoPlay();
+                });
+
+                startAutoPlay();
+            }
+        });
+    </script>
+
+</body>
+</html>

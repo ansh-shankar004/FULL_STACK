@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuber Classic - Project Presentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            overflow: hidden;
+            padding: 10px; /* Space for outer border */
+            border: 5px solid #6D1A36; /* Formal maroon border */
+            box-sizing: border-box;
+            height: 100vh;
+        }
+        .slide {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: calc(100% - 20px);
+            height: calc(100% - 20px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem;
+            background-color: #fdfcf8;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+            border: 1px solid #aa8a59; /* Inner gold border */
+            box-sizing: border-box;
+        }
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+        .slide-content {
+            max-width: 1100px;
+            width: 100%;
+        }
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .text-primary-gold { color: #aa8a59; }
+        .text-accent-maroon { color: #6D1A36; }
+        .bg-primary-gold { background-color: #aa8a59; }
+
+        /* Title Slide Specifics */
+        .title-slide {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+        .title-slide h1 {
+            font-size: 4rem;
+            border-bottom: 3px solid #aa8a59;
+            padding-bottom: 1rem;
+        }
+
+        /* Navigation */
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+            background-color: rgba(0,0,0,0.3);
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        .nav-arrow:hover {
+            background-color: rgba(0,0,0,0.6);
+        }
+        #prev-slide { left: 30px; }
+        #next-slide { right: 30px; }
+
+        /* Slide Counter */
+        #slide-counter {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 20;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        /* Architecture Flowchart */
+        .flowchart {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            text-align: center;
+        }
+        .flowchart-item {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        .flowchart-arrow {
+            font-size: 1.5rem;
+            color: #aa8a59;
+        }
+
+        /* University Logo */
+        .university-logo {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            height: 50px;
+        }
+        .title-slide .university-logo {
+             filter: brightness(0) invert(1); /* Makes the logo white on the dark title slide */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Slides Container -->
+    <div id="presentation-container">
+
+        <!-- Slide 1: Title -->
+        <div class="slide title-slide active">
+            <div class="slide-content text-center">
+                <h1 class="font-bold mb-8">Kuber Classic – A Luxurious Dining Experience</h1>
+                <h2 class="text-2xl mb-6">Frontend Web Development Project</h2>
+                <div class="text-lg">
+                    <p class="font-semibold mb-2">Presented By:</p>
+                    <p>Anandita Baglwan (2310993774)</p>
+                    <p>Ansh Shankar (2310993778)</p>
+                    <p>Arshdeep Yadav (2310993791)</p>
+                    <p class="mt-6"><span class="font-semibold">Mentor:</span> Mr. Baljeet Singh</p>
+                    <p class="mt-2"><span class="font-semibold">Date:</span> August 4, 2025</p>
+                </div>
+            </div>
+            <!-- <img src="images/university-logo.png" alt="University Logo" class="university-logo"> -->
+        </div>
+
+        <!-- Slide 2: Introduction -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="text-4xl font-bold text-primary-gold mb-8">Introduction</h2>
+                <div class="text-xl space-y-6 text-gray-700">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-accent-maroon mb-2">Project Overview</h3>
+                        <p>This project is a comprehensive frontend implementation for "Kuber Classic," a luxury family restaurant. We have developed a modern, single-page website designed to serve as the restaurant's primary digital touchpoint, reflecting its brand identity of elegance and quality. The site provides essential functionalities wrapped in a visually appealing and responsive user interface.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold text-accent-maroon mb-2">Objective</h3>
+                        <p>Our primary objective was to engineer a high-fidelity web presence that not only attracts customers but also provides practical tools for engagement. This includes creating an immersive user experience for browsing, enabling seamless table reservations, and offering an instant event cost estimation tool, thereby enhancing customer convenience and streamlining restaurant operations.</p>
+                    </div>
+                </div>
+            </div>
+            <img src="images2/chitkara-university-logo.png" alt="University Logo" class="university-logo">
+        </div>
+
+        <!-- Slide 3: Website Overview -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="text-4xl font-bold text-primary-gold mb-8">Website Overview (Phase 1)</h2>
+                <p class="text-xl text-center mb-6">We have successfully developed a complete, single-page static website that captures the essence of the Kuber Classic brand with a focus on aesthetics, UX, and responsiveness.</p>
+                <div class="bg-gray-200 w-full h-96 rounded-lg shadow-lg flex items-center justify-center">
+                     <img src="images2/image.png" alt="Kuber Classic Homepage" class="w-full h-full object-contain">
+                </div>
+            </div>
+            <img src="images2/chitkara-university-logo.png" alt="University Logo" class="university-logo">
+        </div>
+        
+        <!-- Slide 4: Hero Image Slider -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="text-4xl font-bold text-primary-gold mb-8">Feature: Hero Image Slider</h2>
+                <div class="grid grid-cols-2 gap-8 items-center">
+                    <div class="bg-gray-200 w-full h-96 rounded-lg shadow-lg flex items-center justify-center">
+                          <img src="images2/Screenshot 2025-08-04 015506.png" alt="Kuber Classic Homepage" class="w-full h-full object-contain">
+                    </div>
+                    <ul class="text-xl space-y-4 list-disc pl-5 text-gray-700">
+                        <li>Opens with a full-screen, dynamic hero section.</li>
+                        <li>Carousel of high-quality, fading images creates a luxurious feel.</li>
+                        <li>Prominent "Reserve Your Table" CTA button.</li>
+                        <li>Subtle scroll-down arrow encourages exploration.</li>
+                    </ul>
+                </div>
+            </div>
+            <img src="images2/chitkara-university-logo.png" alt="University Logo" class="university-logo">
+        </div>
+
+        <!-- Slide 5: Navigation & Sections -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="text-4xl font-bold text-primary-gold mb-8">Feature: Navigation & Sections</h2>
+                 <div class="grid grid-cols-2 gap-8 items-center">
+                    <ul class="text-xl space-y-4 list-disc pl-5 text-gray-700">
+                        <li><b>Sticky Navigation Bar:</b> Remains visible on scroll for easy access.</li>
+                        <li><b>Smooth Scrolling:</b> Clicking a link smoothly navigates to the section.</li>
+                        <li><b>Mobile Responsive Menu:</b> Collapses into a clean hamburger menu on small devices.</li>
+                    </ul>
+                    <div class="bg-gray-200 w-full h-96 rounded-lg shadow-lg flex items-center justify-center">
+                         <img src="images2/mobile.png" alt="Kuber Classic Homepage" class="w-full h-full object-contain">
+                    </div>
+                </div>
+            </div>
+            <img src="images2/chitkara-university-logo.png" alt="University Logo" class="university-logo">
+        </div>
+
+        <!-- Slide 6: Reservation & Quote Forms -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="text-4xl font-bold text-primary-gold mb-8">Features: Reservation & Quote Forms</h2>
+                <div class="grid grid-cols-2 gap-8 items-center">
+                    <div class="bg-gray-200 w-full h-96 rounded-lg shadow-lg flex items-center justify-center">
+                        <img src="images2/Screenshot 2025-08-04 015959.png" alt="Kuber Classic Homepage" class="w-full h-full object-contain">
+                    </div>
+                    <ul class="text-xl space-y-4 list-disc pl-5 text-gray-700">
+                        <li><b>Table Reservation:</b> User-friendly form with dynamic time slot generation and validation.</li>
+                        <li><b>Event Quote Estimator:</b> Interactive tool for instant event cost estimation with conditional discount logic.</li>
+                        <li><b>Data Handling:</b> Both forms compile data into JSON objects, simulating a backend submission.</li>
+                    </ul>
+                </div>
+            </div>
+            <img src="images2/chitkara-university-logo.png" alt="University Logo" class="university-logo">
+        </div>
+
+        <!-- Slide 7: Technology Stack – Phase 1 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="text-4xl font-bold text-primary-gold mb-8">Technology Stack – Phase 1</h2>
+                <ul class="text-xl space-y-4 list-disc pl-8 text-gray-700">
+                    <li><b>HTML5:</b> Used for the semantic structure and content of the website.</li>
+                    <li><b>Tailwind CSS:</b> A utility-first CSS framework for rapid, responsive UI development.</li>
+                    <li><b>Vanilla JavaScript:</b> Powers all client-side interactivity, form logic, and DOM manipulation.</li>
+                    <li><b>Google Fonts:</b> Leveraged for typography (Playfair Display & Inter) to match the luxury theme.</li>
+                </ul>
+            </div>
+            <img src="images2/chitkara-university-logo.png" alt="University Logo" class="university-logo">
+        </div>
+
+        <!-- Slide 8: Project Architecture (Frontend Only) -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="text-4xl font-bold text-primary-gold mb-8">Project Architecture (Frontend Only)</h2>
+                <h3 class="text-2xl font-semibold text-center text-accent-maroon mb-6">Single-Page Application Flow</h3>
+                <div class="flowchart">
+                    <div class="flowchart-item">Hero</div>
+                    <div class="flowchart-arrow">→</div>
+                    <div class="flowchart-item">Navbar</div>
+                    <div class="flowchart-arrow">→</div>
+                    <div class="flowchart-item">Reservation</div>
+                    <div class="flowchart-arrow">→</div>
+                    <div class="flowchart-item">Quote</div>
+                    <div class="flowchart-arrow">→</div>
+                    <div class="flowchart-item">Offers</div>
+                    <div class="flowchart-arrow">→</div>
+                    <div class="flowchart-item">Testimonials</div>
+                     <div class="flowchart-arrow">→</div>
+                    <div class="flowchart-item">Gallery</div>
+                    <div class="flowchart-arrow">→</div>
+                    <div class="flowchart-item">Footer</div>
+                </div>
+                <ul class="text-lg mt-8 list-disc pl-5">
+                    <li><b>DOM Manipulation:</b> JavaScript is used to dynamically change classes and content for features like the sliders and scroll animations.</li>
+                    <li><b>Form Validation:</b> Client-side validation is handled using standard HTML5 attributes.</li>
+                </ul>
+            </div>
+            <img src="images2/chitkara-university-logo.png" alt="University Logo" class="university-logo">
+        </div>
+
+        <!-- Slide 9: Phase 2 Overview -->
+        <div class="slide">
+             <div class="slide-content text-center">
+                <h2 class="text-4xl font-bold text-primary-gold mb-8">Phase 2 – Planned Features</h2>
+                <p class="text-2xl text-gray-700">The next step is to transform the static site into a full-stack, data-driven web application. This involves adding a backend, database, user authentication, and advanced interactive features.</p>
+            </div>
+            <img src="images2/chitkara-university-logo.png" alt="University Logo" class="university-logo">
+        </div>
+
+        <!-- Slide 10: Planned Features (All) -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="text-4xl font-bold text-primary-gold mb-8">Planned Features</h2>
+                <div class="grid grid-cols-2 gap-x-12 gap-y-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-accent-maroon mb-2">1. Menu & Cart System</h3>
+                        <ul class="text-lg list-disc pl-5 text-gray-700">
+                            <li>Interactive menu with item details.</li>
+                            <li>Persistent shopping cart & payment gateway.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-accent-maroon mb-2">2. Advanced Reservation System</h3>
+                        <ul class="text-lg list-disc pl-5 text-gray-700">
+                            <li>Backend integration with real-time availability.</li>
+                            <li>Automated email/SMS confirmation.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-accent-maroon mb-2">3. User & Admin Login</h3>
+                        <ul class="text-lg list-disc pl-5 text-gray-700">
+                            <li>Secure authentication with JWT & bcrypt.</li>
+                            <li>Role-based dashboards for users and admins.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-accent-maroon mb-2">4. Customer Feedback System</h3>
+                        <ul class="text-lg list-disc pl-5 text-gray-700">
+                            <li>Dedicated form for users to submit reviews.</li>
+                            <li>Admin can view and manage all feedback.</li>
+                        </ul>
+                    </div>
+                    <div class="col-span-2">
+                        <h3 class="text-xl font-semibold text-accent-maroon mb-2">5. Chatbot Integration</h3>
+                        <ul class="text-lg list-disc pl-5 text-gray-700">
+                            <li>24/7 AI-powered support for FAQs and booking assistance.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <img src="images2/chitkara-university-logo.png" alt="University Logo" class="university-logo">
+        </div>
+
+        <!-- Slide 11: Technology Stack – Phase 2 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="text-4xl font-bold text-primary-gold mb-8">Technology Stack – Phase 2</h2>
+                <ul class="text-lg space-y-3 list-disc pl-5 text-gray-700">
+                    <li><b>Frontend:</b> React.js + Tailwind CSS</li>
+                    <li><b>Backend:</b> Node.js + Express.js</li>
+                    <li><b>Database:</b> MongoDB (NoSQL)</li>
+                    <li><b>Authentication:</b> JWT, bcrypt</li>
+                    <li><b>AI / ML:</b> Python (Flask + NLP Libraries) or OpenAI API</li>
+                    <li><b>Payments:</b> Razorpay or Stripe</li>
+                    <li><b>Deployment:</b> Netlify (Frontend), Render/Vercel (Backend)</li>
+                </ul>
+            </div>
+            <img src="images2/chitkara-university-logo.png" alt="University Logo" class="university-logo">
+        </div>
+
+        <!-- Slide 12: Project Architecture (Full Stack Vision) -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="text-4xl font-bold text-primary-gold mb-8">Project Architecture (Full Stack Vision)</h2>
+                 <div class="flowchart">
+                    <div class="flowchart-item">Frontend (React)</div>
+                    <div class="flowchart-arrow">↔</div>
+                    <div class="flowchart-item">Backend API (Express)</div>
+                    <div class="flowchart-arrow">↔</div>
+                    <div class="flowchart-item">Database (MongoDB)</div>
+                </div>
+                <div class="flowchart mt-4">
+                    <div class="flowchart-item">Auth System</div>
+                    <div class="flowchart-arrow">↔</div>
+                    <div class="flowchart-item">Payment Gateway</div>
+                    <div class="flowchart-arrow">↔</div>
+                    <div class="flowchart-item">Chatbot Service</div>
+                </div>
+            </div>
+            <img src="images2/chitkara-university-logo.png" alt="University Logo" class="university-logo">
+        </div>
+
+        <!-- Slide 13: Thank You -->
+        <div class="slide title-slide">
+            <div class="slide-content text-center">
+                <h1 class="font-bold mb-8">Thank You!</h1>
+                <div class="text-xl">
+                    <p class="font-semibold mb-4">Acknowledgements:</p>
+                    <p>We would like to extend our sincere gratitude to our mentor, Mr. Baljeet Singh, for his invaluable guidance and support throughout this project.</p>
+                    <!-- <p class="mt-4">Thank you to all our teammates for their hard work and collaboration.</p> -->
+                    <p class="font-semibold mt-8">Questions?</p>
+                </div>
+            </div>
+            <!-- <img src="images/chitkara-university-logo.png" alt="University Logo" class="university-logo"> -->
+        </div>
+
+    </div>
+
+    <!-- Navigation -->
+    <button id="prev-slide" class="nav-arrow">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+    </button>
+    <button id="next-slide" class="nav-arrow">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+    </button>
+    <div id="slide-counter"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const nextButton = document.getElementById('next-slide');
+            const prevButton = document.getElementById('prev-slide');
+            const slideCounter = document.getElementById('slide-counter');
+            let currentSlide = 0;
+
+            const showSlide = (index) => {
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === index);
+                });
+                slideCounter.textContent = `${index + 1} / ${slides.length}`;
+            };
+
+            const next = () => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            };
+
+            const prev = () => {
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                showSlide(currentSlide);
+            };
+
+            nextButton.addEventListener('click', next);
+            prevButton.addEventListener('click', prev);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    next();
+                } else if (e.key === 'ArrowLeft') {
+                    prev();
+                }
+            });
+
+            showSlide(currentSlide);
+        });
+    </script>
+</body>
+</html>
